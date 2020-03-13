@@ -1,0 +1,9 @@
+build:
+  docker:
+    web: nginx/Dockerfile
+    api: api/Dockerfile
+    client: client/Dockerfile
+  config:
+    NODE_ENV: production
+run:
+  api: npm run start
