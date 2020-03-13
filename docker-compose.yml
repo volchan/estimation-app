@@ -1,0 +1,37 @@
+version: '3'
+
+services: 
+  redis:
+    image: redis:latest
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - 3000:80
+    depends_on:
+      - api
+      - client
+
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./api
+    depends_on:
+      - redis
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
