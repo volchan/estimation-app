@@ -1,0 +1,2 @@
+import './boostrap';
+import './fontawesome';
